@@ -24,6 +24,7 @@ using namespace std;
 
 int fd;
 char a[4];
+char b;
 
 int config_serial(char * device, unsigned int baudrate){
 	 struct termios options;
@@ -248,26 +249,34 @@ void sequenciator()
 	{
 		a[0] = '1';
 		a[1] = '1';
+		a[2] = '1';
 		a[3] = '1';
-		write(fd,&a,1);
+		b = '1';
+		write(fd,&b,1);
 		printf("%d\n",1);
 		//nextSequence();
+		usleep(1000000);
 	}
 	else if (!GPIORead(B2))
 	{
 		a[0] = '2';
 		a[1] = '2';
+		a[2] = '2';
 		a[3] = '2';
-		write(fd,&a,1);
+		b = '2';
+		write(fd,&b,1);
 		printf("%d\n",2);
 		//previousSequence();	
+		usleep(1000000);
 	}
 	else if (!GPIORead(B3))
 	{
 		a[0] = '3';
 		a[1] = '3';
+		a[2] = '3';
 		a[3] = '3';
-		write(fd,&a,1);
+		b = '3';
+		write(fd,&b,1);
 		read(fd,&a,4);
 		printf("Uso de cada sequencia:\n",3);
 		printf("sequencia 1: %s\n",a[0]);
@@ -275,6 +284,7 @@ void sequenciator()
 		printf("sequencia 3: %s\n",a[2]);
 		printf("sequencia 4: %s\n",a[3]);
 		//printSequences();	
+		usleep(1000000);
 	}
 }
  
@@ -297,7 +307,7 @@ int main(int argc, char *argv[])
 
 		sequenciator();
 	}
-	while (repeat--);
+	while (1);
 
 	/*
 	* Disable GPIO pins
